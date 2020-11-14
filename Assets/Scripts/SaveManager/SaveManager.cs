@@ -14,11 +14,12 @@ namespace SaveManager
 
         #endregion
 
-        public int MaxScore { get; private set; }
+        [SerializeField] private int maxScore;
+        public int MaxScore => maxScore;
 
         private void Awake()
         {
-            MaxScore = PlayerPrefs.GetInt(MaxScorePrefName);
+            maxScore = PlayerPrefs.GetInt(MaxScorePrefName);
             Debug.Log(string.Format(LoadMsg, MaxScore));
         }
 
@@ -36,7 +37,7 @@ namespace SaveManager
 
         private void SaveMax(int score)
         {
-            MaxScore = score;
+            maxScore = score;
             PlayerPrefs.SetInt(MaxScorePrefName, score);
             Debug.Log(string.Format(NewMaxMsg, score));
         }
@@ -45,6 +46,11 @@ namespace SaveManager
         public void ResetScore()
         {
             SaveMax(0);
+        }
+
+        public void UpdateMax()
+        {
+            SaveMax(maxScore);
         }
 #endif
     }
