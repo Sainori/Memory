@@ -1,18 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using SaveManager;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private float _currentTime = 0;
+    private ISaveManager _saveManager;
+
+    private void Awake()
     {
-        
+        _saveManager = GetComponent<ISaveManager>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        if (_currentTime < 3)
+        {
+            _currentTime += Time.deltaTime;
+            return;
+        }
+
+        _currentTime = 0;
+        var score = Random.Range(100, 200);
+        _saveManager.TrySaveNewMax(score);
     }
 }
