@@ -1,26 +1,33 @@
-﻿using SaveManager;
+﻿using InputSystem;
+using MainUiManager;
+using RoundSceneManager;
+using SaveManager;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private float _currentTime = 0;
     private ISaveManager _saveManager;
+    private IMainUiManager _uiManager;
+    private IInputSystem _inputSystem;
+    private IRoundSceneManager _roundSceneManager;
 
     private void Awake()
     {
+        _uiManager = GetComponent<IMainUiManager>();
         _saveManager = GetComponent<ISaveManager>();
+        _inputSystem = GetComponent<IInputSystem>();
+        _roundSceneManager = GetComponent<IRoundSceneManager>();
+
+        MangerInitialization();
     }
 
-    void FixedUpdate()
+    private void MangerInitialization()
     {
-        if (_currentTime < 3)
-        {
-            _currentTime += Time.deltaTime;
-            return;
-        }
+        _uiManager.Initialize(_saveManager, _roundSceneManager);
+    }
 
-        _currentTime = 0;
-        var score = Random.Range(100, 200);
-        _saveManager.TrySaveNewMax(score);
+    private void Update()
+    {
+        _inputSystem.DirectUpdate();
     }
 }
