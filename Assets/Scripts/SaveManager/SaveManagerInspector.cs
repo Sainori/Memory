@@ -10,19 +10,24 @@ namespace SaveManager
         private const string ResetButtonName = "Reset Score";
         private const string UpdateButtonName = "Update Score";
 
+        private void Awake()
+        {
+            ((SaveManager) target).LoadPreviousScore();
+        }
+
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
 
             var saveManager = (SaveManager) target;
-            if (GUILayout.Button(ResetButtonName))
-            {
-                saveManager.ResetScore();
-            }
-
             if (GUILayout.Button(UpdateButtonName))
             {
                 saveManager.UpdateMax();
+            }
+
+            if (GUILayout.Button(ResetButtonName))
+            {
+                saveManager.ResetScore();
             }
         }
     }
