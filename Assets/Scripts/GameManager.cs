@@ -1,7 +1,8 @@
-﻿using InputSystem;
-using MainUiManager;
+﻿using System;
+using InputSystem;
 using RoundSceneManager;
 using SaveManager;
+using Ui.MainUiManager;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -23,11 +24,16 @@ public class GameManager : MonoBehaviour
 
     private void MangerInitialization()
     {
-        _uiManager.Initialize(_saveManager, _roundSceneManager);
+        _uiManager.Initialize(_saveManager, () => { });
     }
 
     private void Update()
     {
-        _inputSystem.DirectUpdate();
+        // _inputSystem.DirectUpdate();
+    }
+
+    private void FixedUpdate()
+    {
+        
     }
 }
