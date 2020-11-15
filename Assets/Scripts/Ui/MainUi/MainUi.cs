@@ -17,7 +17,8 @@ namespace Ui.MainUi
         public void Initialize(ISaveManager saveManager, Action onPlayButtonClick)
         {
             _saveManager = saveManager;
-            playButton.onClick.AddListener(OnPlay);
+            OnPlayButtonClick += onPlayButtonClick;
+            playButton.onClick.AddListener(() => { OnPlayButtonClick(); });
 
             Activate();
             UpdateScoreText();
@@ -52,11 +53,6 @@ namespace Ui.MainUi
         private void UpdateScoreText()
         {
             scoreText.text = _saveManager.MaxScore.ToString();
-        }
-
-        private void OnPlay()
-        {
-            OnPlayButtonClick();
         }
     }
 }

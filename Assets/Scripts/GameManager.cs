@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 
     private void MangerInitialization()
     {
-        _uiManager.Initialize(_saveManager, () => { });
+        _uiManager.Initialize(_saveManager, () => { _roundSceneManager.OpenRoundScene(); });
     }
 
     private void Update()
