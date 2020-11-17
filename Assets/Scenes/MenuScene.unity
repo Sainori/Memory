@@ -306,7 +306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34dd6afa0c7e46d0bda740492e2e02ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roundScene: {fileID: 102900000, guid: 9fc0d4010bbf28b4594072e72b8655ab, type: 3}
+  roundSceneAsset: {fileID: 102900000, guid: 9fc0d4010bbf28b4594072e72b8655ab, type: 3}
 --- !u!114 &892821189
 MonoBehaviour:
   m_ObjectHideFlags: 0
