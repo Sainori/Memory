@@ -46,6 +46,7 @@ namespace GameSceneManager
                 yield break;
             }
 
+            roundManager.Initialize(this);
             _roundManager = roundManager;
         }
 
