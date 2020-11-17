@@ -1,5 +1,4 @@
-﻿using System;
-using GameSceneManager;
+﻿using GameSceneManager;
 using InputSystem;
 using SaveManager;
 using Ui.MainUiManager;
@@ -19,7 +18,7 @@ public class GameManager : MonoBehaviour
         _inputSystem = GetComponent<IInputSystem>();
         _gameSceneManager = GetComponent<IGameSceneManager>();
 
-        _uiManager.Initialize(_saveManager, () => { StartCoroutine(_gameSceneManager.OpenRoundScene()); });
+        _uiManager.Initialize(_saveManager, _gameSceneManager);
 
         _gameSceneManager.OnRoundOpen += _uiManager.Deactivate;
         _gameSceneManager.OnRoundClose += _uiManager.Activate;

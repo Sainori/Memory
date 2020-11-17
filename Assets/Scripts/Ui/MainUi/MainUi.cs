@@ -14,15 +14,12 @@ namespace Ui.MainUi
 
         public event Action OnPlayButtonClick = () => { };
 
-        public void Initialize(ISaveManager saveManager, Action onPlayButtonClick)
+        public void Initialize(ISaveManager saveManager)
         {
             _saveManager = saveManager;
-            OnPlayButtonClick += onPlayButtonClick;
             playButton.onClick.AddListener(() => { OnPlayButtonClick(); });
-            playButton.onClick.AddListener(() => { Debug.Log("Button click"); });
 
             Activate();
-            UpdateScoreText();
         }
 
         private void SetElementsState(bool isActive)
@@ -33,6 +30,7 @@ namespace Ui.MainUi
 
         public void Activate()
         {
+            UpdateScoreText();
             SetElementsState(true);
         }
 
@@ -41,18 +39,13 @@ namespace Ui.MainUi
             SetElementsState(false);
         }
 
-        private void OnEnable()
+        private void UpdateScoreText()
         {
             if (_saveManager == null)
             {
                 return;
             }
 
-            UpdateScoreText();
-        }
-
-        private void UpdateScoreText()
-        {
             scoreText.text = _saveManager.MaxScore.ToString();
         }
     }

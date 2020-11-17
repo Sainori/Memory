@@ -1,4 +1,5 @@
 using System;
+using GameSceneManager;
 using SaveManager;
 using Ui.MainUi;
 using UnityEngine;
@@ -13,16 +14,15 @@ namespace Ui.MainUiManager
         private IMainUi _mainUi;
         private ISaveManager _saveManager;
 
-        public void Initialize(ISaveManager saveManager, Action onPlayButtonClick)
+        public void Initialize(ISaveManager saveManager, IGameSceneManager gameSceneManager)
         {
             _saveManager = saveManager;
 
             var uiGameObject = Instantiate(uiPrefab, mainUiCanvas.transform);
             _mainUi = uiGameObject.GetComponent<IMainUi>();
 
-            //TODO: suspiciously action
-            onPlayButtonClick += _mainUi.Deactivate;
-            _mainUi.Initialize(_saveManager, onPlayButtonClick);
+            _mainUi.OnPlayButtonClick += () => StartCoroutine(gameSceneManager.OpenRoundScene());
+            _mainUi.Initialize(_saveManager);
         }
 
         public void Activate()
