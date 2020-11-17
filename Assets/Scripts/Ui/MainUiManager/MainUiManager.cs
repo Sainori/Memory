@@ -12,7 +12,7 @@ namespace Ui.MainUiManager
 
         private IMainUi _mainUi;
         private ISaveManager _saveManager;
-        
+
         public void Initialize(ISaveManager saveManager, Action onPlayButtonClick)
         {
             _saveManager = saveManager;
