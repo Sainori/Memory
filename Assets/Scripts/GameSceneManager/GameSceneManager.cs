@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using RoundManager;
@@ -13,14 +14,19 @@ namespace GameSceneManager
         private Scene _roundScene;
         private IRoundManager _roundManager;
 
+        public event Action OnRoundOpen = () => { };
+        public event Action OnRoundClose = () => { };
+
         public IEnumerator OpenRoundScene()
         {
             if (_roundScene != default)
             {
+                Debug.Log("Scene already set!");
                 yield break;
             }
 
             yield return LoadAndInitRoundScene();
+            OnRoundOpen();
         }
 
         private IEnumerator LoadAndInitRoundScene()
@@ -52,6 +58,8 @@ namespace GameSceneManager
 
         public void CloseRoundScene()
         {
+            _roundScene = default; 
+            OnRoundClose();
             SceneManager.UnloadSceneAsync(roundSceneAsset.name);
         }
 

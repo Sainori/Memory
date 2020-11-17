@@ -20,8 +20,19 @@ namespace Ui.MainUiManager
             var uiGameObject = Instantiate(uiPrefab, mainUiCanvas.transform);
             _mainUi = uiGameObject.GetComponent<IMainUi>();
 
+            //TODO: suspiciously action
             onPlayButtonClick += _mainUi.Deactivate;
             _mainUi.Initialize(_saveManager, onPlayButtonClick);
+        }
+
+        public void Activate()
+        {
+            _mainUi.Activate();
+        }
+
+        public void Deactivate()
+        {
+            _mainUi.Deactivate();
         }
     }
 }

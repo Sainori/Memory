@@ -19,6 +19,7 @@ namespace Ui.MainUi
             _saveManager = saveManager;
             OnPlayButtonClick += onPlayButtonClick;
             playButton.onClick.AddListener(() => { OnPlayButtonClick(); });
+            playButton.onClick.AddListener(() => { Debug.Log("Button click"); });
 
             Activate();
             UpdateScoreText();
