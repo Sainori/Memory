@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
         _inputSystem = GetComponent<IInputSystem>();
         _gameSceneManager = GetComponent<IGameSceneManager>();
 
-        _uiManager.Initialize(_saveManager, () => { _gameSceneManager.OpenRoundScene(); });
+        _uiManager.Initialize(_saveManager, () => { StartCoroutine(_gameSceneManager.OpenRoundScene()); });
     }
 
     private void Update()

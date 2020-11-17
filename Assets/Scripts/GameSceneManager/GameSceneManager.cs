@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using RoundManager;
 using UnityEditor;
@@ -12,33 +13,37 @@ namespace GameSceneManager
         private Scene _roundScene;
         private IRoundManager _roundManager;
 
-        public void OpenRoundScene()
+        public IEnumerator OpenRoundScene()
         {
             if (_roundScene != default)
             {
-                return;
+                yield break;
             }
 
-            LoadAndInitRoundScene();
+            yield return LoadAndInitRoundScene();
         }
 
-        private void LoadAndInitRoundScene()
+        private IEnumerator LoadAndInitRoundScene()
         {
             SceneManager.LoadScene(roundSceneAsset.name, LoadSceneMode.Additive);
             _roundScene = SceneManager.GetSceneByName(roundSceneAsset.name);
+            if (!_roundScene.isLoaded)
+            {
+                yield return null;
+            }
 
             var rootRoundSceneObject = _roundScene.GetRootGameObjects().FirstOrDefault();
             if (rootRoundSceneObject == null)
             {
                 Debug.LogError("Can't find root gameObject in RoundScene");
-                return;
+                yield break;
             }
 
             var roundManager = rootRoundSceneObject.GetComponent<IRoundManager>();
             if (roundManager == null)
             {
                 Debug.LogError("Can't find IRoundManager component on root gameObject in RoundScene");
-                return;
+                yield break;
             }
 
             _roundManager = roundManager;

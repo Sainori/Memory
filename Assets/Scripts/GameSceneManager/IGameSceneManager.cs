@@ -1,8 +1,10 @@
+using System.Collections;
+
 namespace GameSceneManager
 {
     public interface IGameSceneManager
     {
-        void OpenRoundScene();
+        IEnumerator OpenRoundScene();
         void CloseRoundScene();
         void DirectUpdate();
     }
