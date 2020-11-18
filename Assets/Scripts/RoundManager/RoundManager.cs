@@ -1,24 +1,28 @@
+using System;
 using Ui.RoundUiManager;
 using UnityEngine;
 using GameSceneManager;
+using PlayField;
 
 namespace RoundManager
 {
     public class RoundManager : MonoBehaviour, IRoundManager
     {
         private IRoundUiManager _roundUiManager;
-        private IGameSceneManager _gameSceneManager;
+        private IPlayField _playField;
 
-        //TODO: add cleanup after scene is closed to prevent bugs
         public void Initialize(IGameSceneManager gameSceneManager)
         {
-            _gameSceneManager = gameSceneManager;
-            _roundUiManager = GetComponent<RoundUiManager>();
+            _roundUiManager = GetComponent<IRoundUiManager>();
+            _playField = GetComponent<IPlayField>();
+
             _roundUiManager.Initialize(gameSceneManager);
+            _playField.Initialize();
         }
 
         public void DirectUpdate()
         {
+            
         }
     }
 }

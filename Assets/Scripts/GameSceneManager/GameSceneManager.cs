@@ -52,13 +52,15 @@ namespace GameSceneManager
                 yield break;
             }
 
-            roundManager.Initialize(this);
             _roundManager = roundManager;
+            _roundManager.Initialize(this);
         }
 
         public void CloseRoundScene()
         {
-            _roundScene = default; 
+            _roundScene = default;
+            _roundManager = null;
+
             OnRoundClose();
             SceneManager.UnloadSceneAsync(roundSceneAsset.name);
         }

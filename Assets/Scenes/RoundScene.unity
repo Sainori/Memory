@@ -296,6 +296,7 @@ GameObject:
   - component: {fileID: 2051620204}
   - component: {fileID: 2051620203}
   - component: {fileID: 2051620205}
+  - component: {fileID: 2051620206}
   m_Layer: 0
   m_Name: RoundManager
   m_TagString: Untagged
@@ -343,3 +344,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roundUi: {fileID: 8091999374469740202, guid: 255779d4b32e34a64ba0e1df3e7fc860, type: 3}
   roundUiCanvas: {fileID: 576629582}
+--- !u!114 &2051620206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051620202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae0bda31fbdd4cfcbbcb04a976e55c72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upLeftCorner: {x: 0, y: 0, z: 0}
+  spaceBetween: 2
+  cardPrefab: {fileID: 2079902373524847376, guid: edce8ec1a57ed4e9f96064fafc4eda42,
+    type: 3}
