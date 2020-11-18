@@ -10,6 +10,8 @@ namespace Card
         private Animator _animator;
 
         private static readonly int IsOpened = Animator.StringToHash("IsOpened");
+        private static readonly int OpeningState = Animator.StringToHash("Opening");
+        private static readonly int ClosingState = Animator.StringToHash("Closing");
 
         private void Awake()
         {
@@ -24,7 +26,6 @@ namespace Card
 
         public void SelectCard()
         {
-            
             _animator.SetBool(IsOpened, !_animator.GetBool(IsOpened));
         }
     }
