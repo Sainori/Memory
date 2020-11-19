@@ -37,6 +37,7 @@ namespace Card
             StartCoroutine(ShowCardFirstTime(firstShowDuration));
         }
 
+        //TODO: set actual view
         private void SetView(uint cardType)
         {
             cardModel.transform.GetComponent<MeshRenderer>().material.color = new Color(0, 0, (float) cardType / 4);
@@ -81,7 +82,7 @@ namespace Card
 
             yield return WaitForState(Closed);
             _animator.SetBool(IsOpened, true);
-            yield return (WaitForState(Opened));
+            yield return WaitForState(Opened);
 
             cardState = CardState.Opened;
 
@@ -97,9 +98,9 @@ namespace Card
         {
             cardState = CardState.Closing;
 
-            yield return (WaitForState(Opened));
+            yield return WaitForState(Opened);
             _animator.SetBool(IsOpened, false);
-            yield return (WaitForState(Closed));
+            yield return WaitForState(Closed);
 
             cardState = CardState.Closed;
         }
@@ -115,7 +116,7 @@ namespace Card
         }
     }
 
-    enum CardState
+    public enum CardState
     {
         Opened,
         Opening,
