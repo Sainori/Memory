@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,10 @@ namespace PlayField
 {
     public class PlayField : MonoBehaviour, IPlayField
     {
+        public event Action OnGameEnd = () => { };
+
+        private event Action OnUpdate = () => { };
+
         private const uint columnCount = 3;
         private const uint rowCount = 5;
 
@@ -27,11 +32,28 @@ namespace PlayField
         public void Initialize(IMatchSystem matchSystem)
         {
             _matchSystem = matchSystem;
+            OnUpdate += CheckGameEnd;
 
             CreateCards();
 
             SetCameraAboveFieldCenter(Camera.main.transform);
             StartCoroutine(SetupCameraTransform(Camera.main));
+        }
+
+        public void DirectUpdate()
+        {
+            OnUpdate();
+        }
+
+        private void CheckGameEnd()
+        {
+            if (cards.Count > 0)
+            {
+                return;
+            }
+
+            OnGameEnd();
+            OnUpdate -= CheckGameEnd;
         }
 
         private void CreateCards()
@@ -47,6 +69,7 @@ namespace PlayField
 
                     card.Initialize(cardTypesList.Dequeue());
                     card.OnOpeningEnd += () => { _matchSystem.TryToAddCard(card); };
+                    card.OnDestroy += () => { cards.Remove(card); };
 
                     cards.Add(card);
                     cardObjects.Add(cardObject);

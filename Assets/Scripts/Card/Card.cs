@@ -7,6 +7,7 @@ namespace Card
     public class Card : MonoBehaviour, ICard
     {
         public event Action OnOpeningEnd = () => { };
+        public event Action OnDestroy = () => { };
 
         public int CardType => (int) _cardType;
 
@@ -40,7 +41,7 @@ namespace Card
         //TODO: set actual view
         private void SetView(uint cardType)
         {
-            cardModel.transform.GetComponent<MeshRenderer>().material.color = new Color(0, 0, (float) cardType / 4);
+            cardModel.transform.GetComponent<MeshRenderer>().material.color = new Color(1 - (float) cardType / 4, 0, (float) cardType / 4);
         }
 
         public void SelectCard()
@@ -65,7 +66,10 @@ namespace Card
 
         public void Destroy()
         {
+            OnDestroy();
+
             OnOpeningEnd = null;
+            OnDestroy = null;
             Destroy(gameObject);
         }
 

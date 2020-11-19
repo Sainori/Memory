@@ -1,4 +1,5 @@
 using RoundSystems.Interfaces;
+using UnityEngine;
 
 namespace RoundSystems
 {
@@ -9,6 +10,7 @@ namespace RoundSystems
         public void AddPoints(uint points)
         {
             Points += points;
+            Debug.Log("POINTS " + Points);
         }
     }
 }

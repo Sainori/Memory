@@ -50,8 +50,7 @@ namespace RoundSystems
                 return;
             }
 
-            var pointsMultiplier = _selectedCards.Count == _matchCardsCount ? PointsPerFullMatch : PointsPerHalfMatch;
-            _scoreSystem.AddPoints(_livesSystem.Lives * pointsMultiplier);
+            TryAddPoints();
 
             if (_selectedCards.Count != _matchCardsCount)
             {
@@ -60,6 +59,17 @@ namespace RoundSystems
 
             _selectedCards.ForEach(selectedCard => selectedCard.Destroy());
             ResetSelectedCards();
+        }
+
+        private void TryAddPoints()
+        {
+            if (_selectedCards.Count == 1)
+            {
+                return;
+            }
+
+            var pointsMultiplier = _selectedCards.Count == _matchCardsCount ? PointsPerFullMatch : PointsPerHalfMatch;
+            _scoreSystem.AddPoints(_livesSystem.Lives * pointsMultiplier);
         }
 
         private void ResetSelectedCards()

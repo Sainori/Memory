@@ -23,16 +23,29 @@ namespace RoundManager
 
             _matchSystem = new MatchSystem(_livesSystem, _scoreSystem);
 
-            _roundUiManager = GetComponent<IRoundUiManager>();
             _playField = GetComponent<IPlayField>();
+            _roundUiManager = GetComponent<IRoundUiManager>();
 
-            _roundUiManager.Initialize(gameSceneManager);
             _playField.Initialize(_matchSystem);
+            _roundUiManager.Initialize(gameSceneManager);
+
+            _livesSystem.OnDeath += OnGameEnd;
+            _playField.OnGameEnd += OnGameEnd;
+        }
+
+        private void OnGameEnd()
+        {
+            Debug.Log("Game End");
+            Debug.Log("Lives total " + _livesSystem.Lives);
+            Debug.Log("Points total " + _scoreSystem.Points);
+
+            // _roundUiManager.ShowEndWindow();
+            //inputSystem.Deactivate();
         }
 
         public void DirectUpdate()
         {
-            
+            _playField.DirectUpdate();
         }
     }
 }
