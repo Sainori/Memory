@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Card;
 using RoundSystems.Interfaces;
-using UnityEngine;
 
 namespace RoundSystems
 {
@@ -10,6 +9,7 @@ namespace RoundSystems
         private const uint PointsPerFullMatch = 3;
         private const int PointsPerHalfMatch = 1;
 
+        //TODO: check if -1 value needed
         private int _cardType;
 
         private readonly uint _matchCardsCount;
@@ -30,14 +30,14 @@ namespace RoundSystems
 
         public void TryToAddCard(ICard card)
         {
-            if (_cardType == -1)
-            {
-                _cardType = card.CardType;
-            }
-
             if (_selectedCards.Contains(card))
             {
                 return;
+            }
+
+            if (_selectedCards.Count == 0)
+            {
+                _cardType = card.CardType;
             }
 
             _selectedCards.Add(card);
