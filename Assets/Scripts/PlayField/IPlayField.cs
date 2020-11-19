@@ -1,7 +1,9 @@
+using RoundSystems.Interfaces;
+
 namespace PlayField
 {
     public interface IPlayField
     {
-        void Initialize();
+        void Initialize(IMatchSystem matchSystem);
     }
 }

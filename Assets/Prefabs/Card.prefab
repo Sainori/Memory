@@ -44,8 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 083149fa6c814893ae34ca7eb0d777a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firstShowDuration: 3
   _cardType: 0
   cardModel: {fileID: 8950713919447457074}
+  cardState: 0
 --- !u!1 &8950713919447457074
 GameObject:
   m_ObjectHideFlags: 0

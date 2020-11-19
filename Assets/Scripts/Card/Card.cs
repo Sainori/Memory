@@ -6,19 +6,22 @@ namespace Card
 {
     public class Card : MonoBehaviour, ICard
     {
+        public event Action OnOpeningEnd = () => { };
+
+        public int CardType => (int) _cardType;
+
         private const string Opened = "Opened";
         private const string Closed = "Closed";
 
         private static readonly int IsOpened = Animator.StringToHash("IsOpened");
 
-        [SerializeField] private float selectDuration = 1;
         [SerializeField] private float firstShowDuration = 3;
 
         [SerializeField] private uint _cardType;
         [SerializeField] private GameObject cardModel;
+        [SerializeField] private CardState cardState;
 
         private Animator _animator;
-        private Coroutine _opening;
 
         private void Awake()
         {
@@ -28,36 +31,95 @@ namespace Card
         public void Initialize(uint cardType)
         {
             _cardType = cardType;
-            cardModel.transform.GetComponent<MeshRenderer>().material.color = new Color(0, 0, (float) cardType / 4);
+            cardState = CardState.Closed;
 
-            StartCoroutine(OpenCard(firstShowDuration));
+            SetView(cardType);
+            StartCoroutine(ShowCardFirstTime(firstShowDuration));
+        }
+
+        private void SetView(uint cardType)
+        {
+            cardModel.transform.GetComponent<MeshRenderer>().material.color = new Color(0, 0, (float) cardType / 4);
         }
 
         public void SelectCard()
         {
-            _opening = StartCoroutine(OpenCard(selectDuration));
+            if (cardState != CardState.Closed)
+            {
+                return;
+            }
+
+            StartCoroutine(OpenCard());
         }
 
-        private IEnumerator OpenCard(float duration)
+        public void UnselectCard()
         {
-            Debug.Log("Open card" + duration);
-
-            var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-            if (!stateInfo.IsName(Closed))
+            if (cardState != CardState.Opened)
             {
-                Debug.Log("break");
+                return;
+            }
+
+            StartCoroutine(CloseCard());
+        }
+
+        public void Destroy()
+        {
+            OnOpeningEnd = null;
+            Destroy(gameObject);
+        }
+
+        private IEnumerator ShowCardFirstTime(float duration)
+        {
+            yield return OpenCard(true);
+            yield return new WaitForSeconds(duration);
+            yield return CloseCard();
+        }
+
+        private IEnumerator OpenCard(bool ignoreAction = false)
+        {
+            cardState = CardState.Opening;
+
+            yield return WaitForState(Closed);
+            _animator.SetBool(IsOpened, true);
+            yield return (WaitForState(Opened));
+
+            cardState = CardState.Opened;
+
+            if (ignoreAction)
+            {
                 yield break;
             }
 
-            _animator.SetBool(IsOpened, true);
+            OnOpeningEnd();
+        }
 
-            if (!stateInfo.IsName(Opened))
+        private IEnumerator CloseCard()
+        {
+            cardState = CardState.Closing;
+
+            yield return (WaitForState(Opened));
+            _animator.SetBool(IsOpened, false);
+            yield return (WaitForState(Closed));
+
+            cardState = CardState.Closed;
+        }
+
+        private IEnumerator WaitForState(string stateName)
+        {
+            var stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+            while (!stateInfo.IsName(stateName))
             {
                 yield return null;
+                stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             }
-
-            yield return new WaitForSeconds(duration);
-            _animator.SetBool(IsOpened, false);
         }
+    }
+
+    enum CardState
+    {
+        Opened,
+        Opening,
+        Closed,
+        Closing
     }
 }

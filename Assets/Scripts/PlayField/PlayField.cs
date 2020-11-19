@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Card;
+using RoundSystems.Interfaces;
 using UnityEngine;
 
 namespace PlayField
@@ -21,8 +22,12 @@ namespace PlayField
         private List<ICard> cards = new List<ICard>();
         private List<GameObject> cardObjects = new List<GameObject>();
 
-        public void Initialize()
+        private IMatchSystem _matchSystem;
+
+        public void Initialize(IMatchSystem matchSystem)
         {
+            _matchSystem = matchSystem;
+
             CreateCards();
 
             SetCameraAboveFieldCenter(Camera.main.transform);
@@ -41,6 +46,7 @@ namespace PlayField
                     var card = cardObject.GetComponent<ICard>();
 
                     card.Initialize(cardTypesList.Dequeue());
+                    card.OnOpeningEnd += () => { _matchSystem.TryToAddCard(card); };
 
                     cards.Add(card);
                     cardObjects.Add(cardObject);
