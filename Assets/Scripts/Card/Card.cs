@@ -17,6 +17,7 @@ namespace Card
         private static readonly int IsOpened = Animator.StringToHash("IsOpened");
 
         [SerializeField] private float firstShowDuration = 3;
+        [SerializeField] private float delayBeforeStart = .3f;
 
         [SerializeField] private uint _cardType;
         [SerializeField] private GameObject cardModel;
@@ -35,7 +36,7 @@ namespace Card
             cardState = CardState.Closed;
 
             SetView(cardType);
-            StartCoroutine(ShowCardFirstTime(firstShowDuration));
+            StartCoroutine(ShowCardFirstTime(delayBeforeStart, firstShowDuration));
         }
 
         //TODO: set actual view
@@ -73,10 +74,11 @@ namespace Card
             Destroy(gameObject);
         }
 
-        private IEnumerator ShowCardFirstTime(float duration)
+        private IEnumerator ShowCardFirstTime(float startDelay, float showDuration)
         {
+            yield return new WaitForSeconds(startDelay);
             yield return OpenCard(true);
-            yield return new WaitForSeconds(duration);
+            yield return new WaitForSeconds(showDuration);
             yield return CloseCard();
         }
 
