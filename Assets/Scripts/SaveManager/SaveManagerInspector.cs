@@ -1,9 +1,10 @@
-using System;
 using UnityEditor;
 using UnityEngine;
 
 namespace SaveManager
 {
+#if UNITY_EDITOR
+
     [CustomEditor(typeof(SaveManager))]
     class SaveManagerInspector : Editor
     {
@@ -31,4 +32,7 @@ namespace SaveManager
             }
         }
     }
+
+#endif
+
 }
