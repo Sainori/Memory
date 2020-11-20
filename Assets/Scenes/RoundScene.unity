@@ -357,7 +357,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardTypesCount: 5
-  upLeftCorner: {x: 0, y: 0, z: 0}
+  upLeftCorner: {x: 0.5, y: 0, z: 0}
   spaceBetween: 2
   cardPrefab: {fileID: 6983428064758018945, guid: 28ed55dc188a84695b682f6e06a101b1,
     type: 3}

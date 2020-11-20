@@ -1,4 +1,5 @@
 using GameSceneManager;
+using RoundSystems.Interfaces;
 using Ui.RoundUi;
 using UnityEngine;
 
@@ -10,12 +11,11 @@ namespace Ui.RoundUiManager
         [SerializeField] private Canvas roundUiCanvas;
         private IRoundUi _roundUi;
 
-        public void Initialize(IGameSceneManager gameSceneManager)
+        public void Initialize(IScoreSystem scoreSystem, IGameSceneManager gameSceneManager)
         {
             var uiGameObject = Instantiate(roundUi, roundUiCanvas.transform);
             _roundUi = uiGameObject.GetComponent<IRoundUi>();
-
-            _roundUi.Initialize(null, gameSceneManager.CloseRoundScene );
+            _roundUi.Initialize(scoreSystem, gameSceneManager.CloseRoundScene);
         }
     }
 }

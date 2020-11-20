@@ -1,10 +1,10 @@
 using System;
-using SaveManager;
+using RoundSystems.Interfaces;
 
 namespace Ui.RoundUi
 {
     public interface IRoundUi
     {
-        void Initialize(ISaveManager saveManager, Action onBackButton);
+        void Initialize(IScoreSystem scoreSystem, Action onBackButton);
     }
 }

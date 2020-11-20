@@ -1,5 +1,5 @@
 using System;
-using SaveManager;
+using RoundSystems.Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,11 +7,23 @@ namespace Ui.RoundUi
 {
     public class RoundUi : MonoBehaviour, IRoundUi
     {
-        [SerializeField] private Button _backButton;
+        [SerializeField] private Button backButton;
+        [SerializeField] private Text scoreText;
 
-        public void Initialize(ISaveManager saveManager, Action onBackButton)
+        private IScoreSystem _scoreSystem;
+
+        public void Initialize(IScoreSystem scoreSystem, Action onBackButton)
         {
-            _backButton.onClick.AddListener(() => onBackButton());
+            _scoreSystem = scoreSystem;
+            backButton.onClick.AddListener(() => onBackButton());
+
+            UpdateScoreText();
+            _scoreSystem.OnScoreUpdate += UpdateScoreText;
+        }
+
+        private void UpdateScoreText()
+        {
+            scoreText.text = _scoreSystem.Points.ToString();
         }
     }
 }
