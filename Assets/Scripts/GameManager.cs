@@ -29,11 +29,6 @@ public class GameManager : MonoBehaviour
         _inputSystem.DirectUpdate();
     }
 
-    private void FixedUpdate()
-    {
-        _gameSceneManager.DirectUpdate();
-    }
-
     private void OnDestroy()
     {
         _gameSceneManager.OnRoundOpen -= _uiManager.Deactivate;

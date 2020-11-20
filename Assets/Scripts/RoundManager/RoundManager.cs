@@ -7,7 +7,7 @@ using RoundSystems.Interfaces;
 
 namespace RoundManager
 {
-    public class RoundManager : MonoBehaviour, IRoundManager
+    public class RoundManager : MonoBehaviour
     {
         private ILivesSystem _livesSystem;
         private IScoreSystem _scoreSystem;
@@ -15,8 +15,9 @@ namespace RoundManager
 
         private IPlayField _playField;
         private IRoundUiManager _roundUiManager;
+        private IGameSceneManager _gameSceneManager;
 
-        public void Initialize(IGameSceneManager gameSceneManager)
+        public void Awake()
         {
             _livesSystem = new LivesSystem();
             _scoreSystem = new ScoreSystem();
@@ -25,9 +26,10 @@ namespace RoundManager
 
             _playField = GetComponent<IPlayField>();
             _roundUiManager = GetComponent<IRoundUiManager>();
+            _gameSceneManager = GetComponent<IGameSceneManager>();
 
             _playField.Initialize(_matchSystem);
-            _roundUiManager.Initialize(_scoreSystem, _livesSystem, gameSceneManager);
+            _roundUiManager.Initialize(_scoreSystem, _livesSystem, _gameSceneManager);
 
             _livesSystem.OnDeath += OnGameEnd;
             _playField.OnGameEnd += OnGameEnd;
@@ -43,7 +45,7 @@ namespace RoundManager
             //inputSystem.Deactivate();
         }
 
-        public void DirectUpdate()
+        public void FixedUpdate()
         {
             _playField.DirectUpdate();
         }

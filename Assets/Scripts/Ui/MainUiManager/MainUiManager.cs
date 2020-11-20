@@ -21,7 +21,8 @@ namespace Ui.MainUiManager
             var uiGameObject = Instantiate(uiPrefab, mainUiCanvas.transform);
             _mainUi = uiGameObject.GetComponent<IMainUi>();
 
-            _mainUi.OnPlayButtonClick += () => StartCoroutine(gameSceneManager.OpenRoundScene());
+            _mainUi.OnPlayButtonClick +=
+                () => StartCoroutine(gameSceneManager.ChangeSceneOn((int) GameScenes.RoundScene));
             _mainUi.Initialize(_saveManager);
         }
 

@@ -8,8 +8,6 @@ namespace GameSceneManager
         event Action OnRoundOpen;
         event Action OnRoundClose;
 
-        IEnumerator OpenRoundScene();
-        void CloseRoundScene();
-        void DirectUpdate();
+        IEnumerator ChangeSceneOn(int sceneBuildIndex);
     }
 }
