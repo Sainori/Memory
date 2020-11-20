@@ -2,7 +2,7 @@ namespace SaveManager
 {
     public interface ISaveManager
     {
-        int MaxScore { get; }
-        bool TrySaveNewMax(int score);
+        uint MaxScore { get; }
+        bool TrySaveNewMax(uint score);
     }
 }

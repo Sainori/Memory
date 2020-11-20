@@ -1,9 +1,11 @@
 using Ui.RoundUiManager;
 using UnityEngine;
 using GameSceneManager;
+using InputSystem;
 using PlayField;
 using RoundSystems;
 using RoundSystems.Interfaces;
+using SaveManager;
 
 namespace RoundManager
 {
@@ -14,6 +16,8 @@ namespace RoundManager
         private IMatchSystem _matchSystem;
 
         private IPlayField _playField;
+        private ISaveManager _saveManager;
+        private IInputSystem _inputSystem;
         private IRoundUiManager _roundUiManager;
         private IGameSceneManager _gameSceneManager;
 
@@ -25,6 +29,8 @@ namespace RoundManager
             _matchSystem = new MatchSystem(_livesSystem, _scoreSystem);
 
             _playField = GetComponent<IPlayField>();
+            _saveManager = GetComponent<ISaveManager>();
+            _inputSystem = GetComponent<IInputSystem>();
             _roundUiManager = GetComponent<IRoundUiManager>();
             _gameSceneManager = GetComponent<IGameSceneManager>();
 
@@ -41,8 +47,17 @@ namespace RoundManager
             Debug.Log("Lives total " + _livesSystem.Lives);
             Debug.Log("Points total " + _scoreSystem.Points);
 
+            if (_saveManager.TrySaveNewMax(_scoreSystem.Points))
+            {
+                //roundManager.ShowNewRecordLabel
+            }
             // _roundUiManager.ShowEndWindow();
-            //inputSystem.Deactivate();
+            // inputSystem.Deactivate();
+        }
+
+        public void Update()
+        {
+            _inputSystem.DirectUpdate();
         }
 
         public void FixedUpdate()
