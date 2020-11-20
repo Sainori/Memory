@@ -27,7 +27,7 @@ namespace RoundManager
             _roundUiManager = GetComponent<IRoundUiManager>();
 
             _playField.Initialize(_matchSystem);
-            _roundUiManager.Initialize(_scoreSystem, gameSceneManager);
+            _roundUiManager.Initialize(_scoreSystem, _livesSystem, gameSceneManager);
 
             _livesSystem.OnDeath += OnGameEnd;
             _playField.OnGameEnd += OnGameEnd;

@@ -4,6 +4,7 @@ namespace RoundSystems.Interfaces
 {
     public interface ILivesSystem
     {
+        event Action OnLifeRemove;
         event Action OnDeath;
 
         uint Lives { get; }

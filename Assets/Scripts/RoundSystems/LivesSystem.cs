@@ -5,6 +5,7 @@ namespace RoundSystems
 {
     public class LivesSystem : ILivesSystem
     {
+        public event Action OnLifeRemove = () => { };
         public event Action OnDeath = () => { };
 
         public uint Lives { get; private set; }
@@ -17,6 +18,7 @@ namespace RoundSystems
         public void RemoveLife()
         {
             Lives--;
+            OnLifeRemove();
 
             if (Lives != 0)
             {

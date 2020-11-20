@@ -5,6 +5,6 @@ namespace Ui.RoundUi
 {
     public interface IRoundUi
     {
-        void Initialize(IScoreSystem scoreSystem, Action onBackButton);
+        void Initialize(IScoreSystem scoreSystem, ILivesSystem livesSystem, Action onBackButton);
     }
 }

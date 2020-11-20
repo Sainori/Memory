@@ -11,11 +11,11 @@ namespace Ui.RoundUiManager
         [SerializeField] private Canvas roundUiCanvas;
         private IRoundUi _roundUi;
 
-        public void Initialize(IScoreSystem scoreSystem, IGameSceneManager gameSceneManager)
+        public void Initialize(IScoreSystem scoreSystem, ILivesSystem livesSystem, IGameSceneManager gameSceneManager)
         {
             var uiGameObject = Instantiate(roundUi, roundUiCanvas.transform);
             _roundUi = uiGameObject.GetComponent<IRoundUi>();
-            _roundUi.Initialize(scoreSystem, gameSceneManager.CloseRoundScene);
+            _roundUi.Initialize(scoreSystem, livesSystem,gameSceneManager.CloseRoundScene);
         }
     }
 }
