@@ -8,11 +8,13 @@ namespace RoundSystems
         public event Action OnLifeRemove = () => { };
         public event Action OnDeath = () => { };
 
+        public uint MaxLives { get; }
         public uint Lives { get; private set; }
 
-        public LivesSystem(uint startLivesCount = 5)
+        public LivesSystem(uint maxLives = 5)
         {
-            Lives = startLivesCount;
+            Lives = maxLives;
+            MaxLives = maxLives;
         }
 
         public void RemoveLife()

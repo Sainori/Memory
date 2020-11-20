@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using RoundSystems.Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +13,7 @@ namespace Ui.RoundUi
         [SerializeField] private Transform livesContainer;
         [SerializeField] private Life lifeSample;
 
-        private Stack<Life> _lives = new Stack<Life>();
+        private Life[] _lives;
 
         private IScoreSystem _scoreSystem;
         private ILivesSystem _livesSystem;
@@ -34,12 +33,14 @@ namespace Ui.RoundUi
 
         private void SetupLives()
         {
+            _lives = new Life[_livesSystem.MaxLives];
+
             for (var i = 0; i < _livesSystem.Lives; i++)
             {
                 var life = Instantiate(lifeSample, livesContainer);
                 life.gameObject.SetActive(true);
                 life.ActivateLife();
-                _lives.Push(life);
+                _lives[i] = life;
             }
         }
 
@@ -50,7 +51,13 @@ namespace Ui.RoundUi
 
         private void RemoveLife()
         {
-            _lives.Pop().DeactivateLife();
+            _lives[_livesSystem.Lives].DeactivateLife();
+        }
+
+        private void OnDestroy()
+        {
+            _scoreSystem.OnScoreUpdate -= UpdateScoreText;
+            _livesSystem.OnLifeRemove -= RemoveLife;
         }
     }
 }

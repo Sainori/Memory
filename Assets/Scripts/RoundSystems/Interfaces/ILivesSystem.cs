@@ -7,6 +7,7 @@ namespace RoundSystems.Interfaces
         event Action OnLifeRemove;
         event Action OnDeath;
 
+        uint MaxLives { get; }
         uint Lives { get; }
         void RemoveLife();
     }
