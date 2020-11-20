@@ -36,6 +36,7 @@ namespace RoundManager
 
             _playField.Initialize(_matchSystem);
             _roundUiManager.Initialize(_scoreSystem, _livesSystem, _gameSceneManager);
+            _saveManager.LoadSavedInfo();
 
             _livesSystem.OnDeath += OnGameEnd;
             _playField.OnGameEnd += OnGameEnd;

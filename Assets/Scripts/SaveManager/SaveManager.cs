@@ -17,12 +17,7 @@ namespace SaveManager
         [SerializeField] private uint maxScore;
         public uint MaxScore => maxScore;
 
-        private void Awake()
-        {
-            LoadMaxScore();
-        }
-
-        private void LoadMaxScore()
+        public void LoadSavedInfo()
         {
             maxScore = (uint) PlayerPrefs.GetInt(MaxScorePrefName);
             Debug.Log(string.Format(LoadMsg, MaxScore));
@@ -49,7 +44,7 @@ namespace SaveManager
         }
 
 #if UNITY_EDITOR
-        public void LoadPreviousScore() => LoadMaxScore();
+        public void LoadPreviousScore() => LoadSavedInfo();
 
         public void ResetScore()
         {

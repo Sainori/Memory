@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
         _inputSystem = GetComponent<IInputSystem>();
         _gameSceneManager = GetComponent<IGameSceneManager>();
 
+        _saveManager.LoadSavedInfo();
         _uiManager.Initialize(_saveManager, _gameSceneManager);
 
         _gameSceneManager.OnRoundOpen += _uiManager.Deactivate;
