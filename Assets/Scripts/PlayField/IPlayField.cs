@@ -1,5 +1,6 @@
 using System;
 using RoundSystems.Interfaces;
+using UnityEngine;
 
 namespace PlayField
 {
@@ -7,7 +8,7 @@ namespace PlayField
     {
         event Action OnGameEnd;
 
-        void Initialize(IMatchSystem matchSystem);
+        void Initialize(IMatchSystem matchSystem, GameObject[] cardReferences);
         void DirectUpdate();
         void Reset();
     }

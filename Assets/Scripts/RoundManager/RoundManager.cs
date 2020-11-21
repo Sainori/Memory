@@ -1,3 +1,4 @@
+using Card;
 using Ui.RoundUiManager;
 using UnityEngine;
 using GameSceneManager;
@@ -22,6 +23,8 @@ namespace RoundManager
         private IGameSceneManager _gameSceneManager;
         private bool isGameEnded;
 
+        private GameObject[] _cardReferences;
+
         private void Awake()
         {
             _livesSystem = new LivesSystem();
@@ -34,7 +37,9 @@ namespace RoundManager
             _roundUiManager = GetComponent<IRoundUiManager>();
             _gameSceneManager = GetComponent<IGameSceneManager>();
 
-            _playField.Initialize(_matchSystem);
+            _cardReferences = GetComponent<CardReferences>().GetCardObjects();
+
+            _playField.Initialize(_matchSystem, _cardReferences);
             _roundUiManager.Initialize(_scoreSystem, _livesSystem, _gameSceneManager, Restart);
             _saveManager.LoadSavedInfo();
 

@@ -28,9 +28,11 @@ namespace PlayField
         private List<GameObject> cardObjects = new List<GameObject>();
 
         private IMatchSystem _matchSystem;
+        private Mesh[] _cardReferences;
 
-        public void Initialize(IMatchSystem matchSystem)
+        public void Initialize(IMatchSystem matchSystem, GameObject[] cardReferences)
         {
+            _cardReferences = cardReferences.ToList().Select(o => o.GetComponent<MeshFilter>().sharedMesh).ToArray();
             _matchSystem = matchSystem;
             OnUpdate += CheckGameEnd;
 
@@ -78,7 +80,10 @@ namespace PlayField
                     var cardObject = CreateCardObject(rowIndex, columnIndex);
                     var card = cardObject.GetComponent<ICard>();
 
-                    card.Initialize(cardTypesList.Dequeue());
+                    var cardType = cardTypesList.Dequeue();
+                    cardObject.GetComponentInChildren<MeshFilter>().mesh = _cardReferences[cardType];
+
+                    card.Initialize(cardType);
                     card.OnOpeningEnd += () => { _matchSystem.TryToAddCard(card); };
                     card.OnDestroy += () => { cards.Remove(card); };
 

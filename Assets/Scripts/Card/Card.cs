@@ -35,7 +35,7 @@ namespace Card
             _cardType = cardType;
             cardState = CardState.Closed;
 
-            SetView(cardType);
+            // SetView(cardType);
             StartCoroutine(ShowCardFirstTime(delayBeforeStart, firstShowDuration));
         }
 

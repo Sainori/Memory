@@ -453,7 +453,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2011813317}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.6770782, y: -0.18458913, z: 0.18142253, w: 0.6888961}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -475,6 +475,7 @@ GameObject:
   - component: {fileID: 2051620207}
   - component: {fileID: 2051620208}
   - component: {fileID: 2051620209}
+  - component: {fileID: 2051620210}
   m_Layer: 0
   m_Name: RoundManager
   m_TagString: Untagged
@@ -578,4 +579,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b29367fa2c348dcbc657335754c625b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxScore: 80
+  maxScore: 100
+--- !u!114 &2051620210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051620202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 347414720c83420485da44bccccc5c2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardMeshes:
+  - {fileID: 919132149155446097, guid: 2cec20106a6b0418499d418f5f4662ac, type: 3}
+  - {fileID: 919132149155446097, guid: 257b5dbdbdef44a4da38296c30c1eb98, type: 3}
+  - {fileID: 919132149155446097, guid: 2b0d8dacc4bb24d70bd145d46e22c8cd, type: 3}
+  - {fileID: 919132149155446097, guid: 7ecb3a88513544e808d9c3d2218dd4a8, type: 3}
+  - {fileID: 919132149155446097, guid: 711441a5a9c3d46b08a4bf80137c94a5, type: 3}
