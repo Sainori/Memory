@@ -27,6 +27,8 @@ namespace Ui.RoundUiManager
 
             var endGameObject = Instantiate(endGamePrefab, roundUiCanvas.transform);
             _endGameWindow = endGameObject.GetComponent<IEndGameWindow>();
+            _endGameWindow.Initialize();
+
             _endGameWindow.OnRestartButton += OnRestartButton;
             _endGameWindow.OnBackButton += OnBackButton;
         }
