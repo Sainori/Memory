@@ -12,17 +12,27 @@ namespace Ui.MainUiManager
 
         private IMainUi _mainUi;
         private ISaveManager _saveManager;
+        private IGameSceneManager _gameSceneManager;
 
         public void Initialize(ISaveManager saveManager, IGameSceneManager gameSceneManager)
         {
             _saveManager = saveManager;
+            _gameSceneManager = gameSceneManager;
 
+            ShowPlayButton();
+        }
+
+        private void ShowPlayButton()
+        {
             var uiGameObject = Instantiate(uiPrefab, mainUiCanvas.transform);
             _mainUi = uiGameObject.GetComponent<IMainUi>();
-
-            _mainUi.OnPlayButtonClick +=
-                () => StartCoroutine(gameSceneManager.ChangeSceneOn((int) GameScenes.RoundScene));
+            _mainUi.OnPlayButtonClick += OnPlay;
             _mainUi.Initialize(_saveManager);
+        }
+
+        private void OnPlay()
+        {
+            StartCoroutine(_gameSceneManager.ChangeSceneOn((int) GameScenes.RoundScene));
         }
     }
 }

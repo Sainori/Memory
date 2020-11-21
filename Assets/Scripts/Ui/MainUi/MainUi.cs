@@ -22,21 +22,13 @@ namespace Ui.MainUi
             Activate();
         }
 
-        private void SetElementsState(bool isActive)
-        {
-            playButton.gameObject.SetActive(isActive);
-            scoreText.gameObject.SetActive(isActive);
-        }
-
-        public void Activate()
+        private void Activate()
         {
             UpdateScoreText();
-            SetElementsState(true);
-        }
 
-        public void Deactivate()
-        {
-            SetElementsState(false);
+            playButton.gameObject.SetActive(true);
+            scoreText.gameObject.SetActive(true);
+
         }
 
         private void UpdateScoreText()
