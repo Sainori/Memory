@@ -520,7 +520,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5274352a77ce4f24ad13b894d8b9cfae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roundUi: {fileID: 8091999374469740202, guid: 255779d4b32e34a64ba0e1df3e7fc860, type: 3}
+  roundUiPrefab: {fileID: 8091999374469740202, guid: 255779d4b32e34a64ba0e1df3e7fc860,
+    type: 3}
+  endGamePrefab: {fileID: 7818296969316188116, guid: d48889bbb6f414bad8da02cda7862bf7,
+    type: 3}
   roundUiCanvas: {fileID: 576629582}
 --- !u!114 &2051620206
 MonoBehaviour:
@@ -575,4 +578,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b29367fa2c348dcbc657335754c625b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxScore: 0
+  maxScore: 100

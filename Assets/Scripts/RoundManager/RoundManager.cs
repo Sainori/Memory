@@ -38,21 +38,19 @@ namespace RoundManager
             _roundUiManager.Initialize(_scoreSystem, _livesSystem, _gameSceneManager);
             _saveManager.LoadSavedInfo();
 
-            _livesSystem.OnDeath += OnGameEnd;
-            _playField.OnGameEnd += OnGameEnd;
+            _livesSystem.OnDeath += () => OnGameEnd(false);
+            _playField.OnGameEnd += () => OnGameEnd(true);
         }
 
-        private void OnGameEnd()
+        private void OnGameEnd(bool isWin)
         {
             Debug.Log("Game End");
             Debug.Log("Lives total " + _livesSystem.Lives);
             Debug.Log("Points total " + _scoreSystem.Points);
 
-            if (_saveManager.TrySaveNewMax(_scoreSystem.Points))
-            {
-                //roundManager.ShowNewRecordLabel
-            }
-            // _roundUiManager.ShowEndWindow();
+            var isNewRecord = _saveManager.TrySaveNewMax(_scoreSystem.Points);
+            _roundUiManager.ShowEndWindow(_scoreSystem.Points, _saveManager.MaxScore, isNewRecord, isWin);
+
             // inputSystem.Deactivate();
         }
 

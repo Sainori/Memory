@@ -31,6 +31,11 @@ namespace Ui.RoundUi
             backButton.onClick.AddListener(() => onBackButton());
         }
 
+        public void Restart()
+        {
+            return;
+        }
+
         private void SetupLives()
         {
             _lives = new Life[_livesSystem.MaxLives];

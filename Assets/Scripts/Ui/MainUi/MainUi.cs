@@ -17,7 +17,7 @@ namespace Ui.MainUi
         public void Initialize(ISaveManager saveManager)
         {
             _saveManager = saveManager;
-            playButton.onClick.AddListener(() => { OnPlayButtonClick(); });
+            playButton.onClick.AddListener(() => OnPlayButtonClick());
 
             Activate();
         }
