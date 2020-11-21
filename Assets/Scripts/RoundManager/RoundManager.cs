@@ -20,6 +20,7 @@ namespace RoundManager
         private IInputSystem _inputSystem;
         private IRoundUiManager _roundUiManager;
         private IGameSceneManager _gameSceneManager;
+        private bool isGameEnded;
 
         public void Awake()
         {
@@ -40,22 +41,25 @@ namespace RoundManager
 
             _livesSystem.OnDeath += () => OnGameEnd(false);
             _playField.OnGameEnd += () => OnGameEnd(true);
+
+            isGameEnded = false;
         }
 
         private void OnGameEnd(bool isWin)
         {
-            Debug.Log("Game End");
-            Debug.Log("Lives total " + _livesSystem.Lives);
-            Debug.Log("Points total " + _scoreSystem.Points);
+            isGameEnded = true;
 
             var isNewRecord = _saveManager.TrySaveNewMax(_scoreSystem.Points);
             _roundUiManager.ShowEndWindow(_scoreSystem.Points, _saveManager.MaxScore, isNewRecord, isWin);
-
-            // inputSystem.Deactivate();
         }
 
         public void Update()
         {
+            if (isGameEnded)
+            {
+                return;
+            }
+
             _inputSystem.DirectUpdate();
         }
 

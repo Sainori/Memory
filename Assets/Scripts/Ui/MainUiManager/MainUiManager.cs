@@ -1,4 +1,3 @@
-using System;
 using GameSceneManager;
 using SaveManager;
 using Ui.MainUi;
@@ -24,16 +23,6 @@ namespace Ui.MainUiManager
             _mainUi.OnPlayButtonClick +=
                 () => StartCoroutine(gameSceneManager.ChangeSceneOn((int) GameScenes.RoundScene));
             _mainUi.Initialize(_saveManager);
-        }
-
-        public void Activate()
-        {
-            _mainUi.Activate();
-        }
-
-        public void Deactivate()
-        {
-            _mainUi.Deactivate();
         }
     }
 }

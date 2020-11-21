@@ -7,8 +7,5 @@ namespace Ui.MainUi
     {
         event Action OnPlayButtonClick;
         void Initialize(ISaveManager saveManager);
-
-        void Activate();
-        void Deactivate();
     }
 }

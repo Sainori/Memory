@@ -7,9 +7,6 @@ namespace GameSceneManager
 {
     public class GameSceneManager : MonoBehaviour, IGameSceneManager
     {
-        public event Action OnRoundOpen = () => { };
-        public event Action OnRoundClose = () => { };
-
         public IEnumerator ChangeSceneOn(int sceneBuildIndex)
         {
             SceneManager.LoadScene(sceneBuildIndex);
