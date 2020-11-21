@@ -37,12 +37,23 @@ namespace PlayField
             CreateCards();
 
             SetCameraAboveFieldCenter(Camera.main.transform);
+
+            //TODO: maybe it's unnecessary 
             StartCoroutine(SetupCameraTransform(Camera.main));
         }
 
         public void DirectUpdate()
         {
             OnUpdate();
+        }
+
+        public void Reset()
+        {
+            cards.Clear();
+            cardObjects.ForEach(Destroy);
+
+            CreateCards();
+            OnUpdate += CheckGameEnd;
         }
 
         private void CheckGameEnd()

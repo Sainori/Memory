@@ -10,5 +10,6 @@ namespace RoundSystems.Interfaces
         uint MaxLives { get; }
         uint Lives { get; }
         void RemoveLife();
+        void Reset();
     }
 }

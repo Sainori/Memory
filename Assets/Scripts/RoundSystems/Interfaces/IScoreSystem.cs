@@ -8,5 +8,6 @@ namespace RoundSystems.Interfaces
 
         uint Points { get; }
         void AddPoints(uint points);
+        void Reset();
     }
 }

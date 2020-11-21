@@ -9,7 +9,6 @@ namespace RoundSystems
         private const uint PointsPerFullMatch = 3;
         private const int PointsPerHalfMatch = 1;
 
-        //TODO: check if -1 value needed
         private int _cardType;
 
         private readonly uint _matchCardsCount;
@@ -23,7 +22,6 @@ namespace RoundSystems
             _livesSystem = livesSystem;
             _scoreSystem = scoreSystem;
 
-            _cardType = -1;
             _matchCardsCount = matchCardsCount;
             _selectedCards = new List<ICard>((int) matchCardsCount);
         }
@@ -61,6 +59,11 @@ namespace RoundSystems
             ResetSelectedCards();
         }
 
+        public void Reset()
+        {
+            ResetSelectedCards();
+        }
+
         private void TryAddPoints()
         {
             if (_selectedCards.Count == 1)
@@ -75,7 +78,6 @@ namespace RoundSystems
         private void ResetSelectedCards()
         {
             _selectedCards.Clear();
-            _cardType = -1;
         }
     }
 }

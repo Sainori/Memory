@@ -9,5 +9,6 @@ namespace PlayField
 
         void Initialize(IMatchSystem matchSystem);
         void DirectUpdate();
+        void Reset();
     }
 }

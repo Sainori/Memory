@@ -30,6 +30,11 @@ namespace RoundSystems
             Death();
         }
 
+        public void Reset()
+        {
+            Lives = MaxLives;
+        }
+
         private void Death()
         {
             OnDeath();

@@ -22,11 +22,10 @@ namespace RoundManager
         private IGameSceneManager _gameSceneManager;
         private bool isGameEnded;
 
-        public void Awake()
+        private void Awake()
         {
             _livesSystem = new LivesSystem();
             _scoreSystem = new ScoreSystem();
-
             _matchSystem = new MatchSystem(_livesSystem, _scoreSystem);
 
             _playField = GetComponent<IPlayField>();
@@ -36,7 +35,7 @@ namespace RoundManager
             _gameSceneManager = GetComponent<IGameSceneManager>();
 
             _playField.Initialize(_matchSystem);
-            _roundUiManager.Initialize(_scoreSystem, _livesSystem, _gameSceneManager);
+            _roundUiManager.Initialize(_scoreSystem, _livesSystem, _gameSceneManager, Restart);
             _saveManager.LoadSavedInfo();
 
             _livesSystem.OnDeath += () => OnGameEnd(false);
@@ -53,7 +52,7 @@ namespace RoundManager
             _roundUiManager.ShowEndWindow(_scoreSystem.Points, _saveManager.MaxScore, isNewRecord, isWin);
         }
 
-        public void Update()
+        private void Update()
         {
             if (isGameEnded)
             {
@@ -63,9 +62,21 @@ namespace RoundManager
             _inputSystem.DirectUpdate();
         }
 
-        public void FixedUpdate()
+        private void FixedUpdate()
         {
             _playField.DirectUpdate();
+        }
+
+        private void Restart()
+        {
+            _livesSystem.Reset();
+            _scoreSystem.Reset();
+            _matchSystem.Reset();
+
+            _playField.Reset();
+            _roundUiManager.Reset();
+
+            isGameEnded = false;
         }
     }
 }

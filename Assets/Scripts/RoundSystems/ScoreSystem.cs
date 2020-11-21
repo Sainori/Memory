@@ -13,5 +13,10 @@ namespace RoundSystems
             Points += points;
             OnScoreUpdate();
         }
+
+        public void Reset()
+        {
+            Points = 0;
+        }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography;
 using RoundSystems.Interfaces;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,9 +32,15 @@ namespace Ui.RoundUi
             backButton.onClick.AddListener(() => onBackButton());
         }
 
-        public void Restart()
+        public void Reset()
         {
-            return;
+            foreach (var life in _lives)
+            {
+                Destroy(life.gameObject);
+            }
+
+            UpdateScoreText();
+            SetupLives();
         }
 
         private void SetupLives()
