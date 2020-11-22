@@ -611,7 +611,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b510fa73e17d4397a02bb982d4303c5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 363638094}
+  aspectConst: 33.75
   distanceBetweenFieldAndCamera: 10
+  mainCamera: {fileID: 363638093}
+  cameraTransform: {fileID: 363638094}
   additionalRotation: {x: 0, y: -90, z: 0}
   lightOnScene: {fileID: 2011813319}
