@@ -9,12 +9,6 @@ namespace Ui.MainUi
     {
         [SerializeField] private string maxScoreMsg = "Лучший результат: {0}";
 
-        [SerializeField] private float playButtonWidthScreenPercent = 0.6f;
-        [SerializeField] private float playButtonHeightPercent = 0.3f;
-
-        [SerializeField] private float scoreTextWidthScreenPercent = 0.9f;
-        [SerializeField] private float scoreTextHeightPercent = 0.2f;
-
         [SerializeField] private Button playButton;
         [SerializeField] private Text scoreText;
 
@@ -26,15 +20,8 @@ namespace Ui.MainUi
         {
             _saveManager = saveManager;
 
-            SetupPlayButton();
-            SetObjectRect(scoreText, scoreTextWidthScreenPercent, scoreTextHeightPercent);
-            Activate();
-        }
-
-        private void SetupPlayButton()
-        {
             playButton.onClick.AddListener(() => OnPlayButtonClick());
-            SetObjectRect(playButton, playButtonWidthScreenPercent, playButtonHeightPercent);
+            Activate();
         }
 
         private void Activate()
@@ -54,18 +41,6 @@ namespace Ui.MainUi
             }
 
             scoreText.text = string.Format(maxScoreMsg, _saveManager.MaxScore);
-        }
-
-        private void SetObjectRect(MonoBehaviour monoObject, float widthToScreenPercent, float heightToWidthPercent)
-        {
-            var rectTransform = monoObject.GetComponent<RectTransform>();
-            if (rectTransform == null)
-            {
-                return;
-            }
-
-            var width = Screen.width * widthToScreenPercent;
-            rectTransform.sizeDelta = new Vector2(width, width * heightToWidthPercent);
         }
     }
 }
