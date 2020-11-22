@@ -4,6 +4,7 @@ using Ui.RoundUiManager;
 using UnityEngine;
 using GameSceneManager;
 using InputSystem;
+using LightAndCameraSystem;
 using PlayField;
 using RoundSystems;
 using RoundSystems.Interfaces;
@@ -25,6 +26,7 @@ namespace RoundManager
         private bool isGameEnded;
 
         private Mesh[] _cardMeshes;
+        private ILightAndCameraSystem _lightAndCameraSystem;
 
         private void Awake()
         {
@@ -37,6 +39,8 @@ namespace RoundManager
             _inputSystem = GetComponent<IInputSystem>();
             _roundUiManager = GetComponent<IRoundUiManager>();
             _gameSceneManager = GetComponent<IGameSceneManager>();
+            _lightAndCameraSystem = GetComponent<ILightAndCameraSystem>();
+            _cardMeshes = GetComponent<CardReferences>().GetCardObjects();
 
             StartCoroutine(InitializeRound());
         }
@@ -45,14 +49,13 @@ namespace RoundManager
         {
             isGameEnded = true;
 
-            _cardMeshes = GetComponent<CardReferences>().GetCardObjects();
             _roundUiManager.Initialize(_scoreSystem, _livesSystem, _gameSceneManager, Restart);
             _saveManager.LoadSavedInfo();
 
             _livesSystem.OnDeath += () => OnGameEnd(false);
             _playField.OnGameEnd += () => OnGameEnd(true);
 
-            yield return _playField.Initialize(_matchSystem, _cardMeshes);
+            yield return _playField.Initialize(_matchSystem, _cardMeshes, _lightAndCameraSystem);
             isGameEnded = false;
         }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using LightAndCameraSystem;
 using RoundSystems.Interfaces;
 using UnityEngine;
 
@@ -9,7 +10,8 @@ namespace PlayField
     {
         event Action OnGameEnd;
 
-        IEnumerator Initialize(IMatchSystem matchSystem, Mesh[] cardReferences);
+        IEnumerator Initialize(IMatchSystem matchSystem, Mesh[] cardReferences,
+            ILightAndCameraSystem lightAndCameraSystem);
         void DirectUpdate();
         IEnumerator Reset();
     }

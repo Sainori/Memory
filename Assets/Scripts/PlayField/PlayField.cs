@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Card;
 using Extensions;
+using LightAndCameraSystem;
 using RoundSystems.Interfaces;
 using UnityEngine;
 
@@ -30,13 +30,13 @@ namespace PlayField
         private IMatchSystem _matchSystem;
         private Mesh[] _cardReferences;
 
-        public IEnumerator Initialize(IMatchSystem matchSystem, Mesh[] cardReferences)
+        public IEnumerator Initialize(IMatchSystem matchSystem, Mesh[] cardReferences, ILightAndCameraSystem lightAndCameraSystem)
         {
             _cardReferences = cardReferences;
             _matchSystem = matchSystem;
             OnUpdate += CheckGameEnd;
 
-            SetCameraAboveFieldCenter(Camera.main.transform);
+            lightAndCameraSystem.Initiallize(GetFieldCenterPosition());
             yield return CreateCards();
         }
 
@@ -128,38 +128,12 @@ namespace PlayField
             return new Queue<uint>(cardTypes);
         }
 
-        private IEnumerator SetupCameraTransform(Camera mainCamera)
-        {
-            var upLeftCard = cardObjects.First();
-            var downRightCard = cardObjects.Last();
-
-            bool isAllCardsVisible = false;
-            while (!isAllCardsVisible)
-            {
-                var upLeftCameraPoint = mainCamera.WorldToViewportPoint(upLeftCard.transform.position - Vector3.one);
-                var downRightCameraPoint = mainCamera.WorldToViewportPoint(downRightCard.transform.position + Vector3.one);
-
-                if (upLeftCameraPoint.x < 0 || upLeftCameraPoint.y < 0 || downRightCameraPoint.x > 1 || downRightCameraPoint.y > 1 )
-                {
-                    mainCamera.transform.position = new Vector3(
-                        mainCamera.transform.position.x,
-                        mainCamera.transform.position.y + spaceBetween,
-                        mainCamera.transform.position.z);
-
-                    yield return null;
-                    continue;
-                }
-
-                isAllCardsVisible = true;
-            }
-        }
-
-        private void SetCameraAboveFieldCenter(Transform cameraTransform)
+        private Vector3 GetFieldCenterPosition()
         {
             var cameraXPosition = (upLeftCorner.x + spaceBetween * (rowCount - 1)) / 2;
             var cameraZPosition = (upLeftCorner.z + spaceBetween * (columnCount - 1)) / 2;
 
-            cameraTransform.position = new Vector3(cameraXPosition, cameraTransform.position.y, cameraZPosition);
+            return new Vector3(cameraXPosition, upLeftCorner.y, cameraZPosition);
         }
     }
 }
