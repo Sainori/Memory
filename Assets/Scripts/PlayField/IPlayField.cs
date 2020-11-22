@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using RoundSystems.Interfaces;
 using UnityEngine;
 
@@ -8,8 +9,8 @@ namespace PlayField
     {
         event Action OnGameEnd;
 
-        void Initialize(IMatchSystem matchSystem, Mesh[] cardReferences);
+        IEnumerator Initialize(IMatchSystem matchSystem, Mesh[] cardReferences);
         void DirectUpdate();
-        void Reset();
+        IEnumerator Reset();
     }
 }

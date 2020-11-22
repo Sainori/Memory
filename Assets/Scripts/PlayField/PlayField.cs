@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Card;
+using Extensions;
 using RoundSystems.Interfaces;
 using UnityEngine;
 
@@ -11,7 +12,6 @@ namespace PlayField
     public class PlayField : MonoBehaviour, IPlayField
     {
         public event Action OnGameEnd = () => { };
-
         private event Action OnUpdate = () => { };
 
         private const uint columnCount = 3;
@@ -30,18 +30,14 @@ namespace PlayField
         private IMatchSystem _matchSystem;
         private Mesh[] _cardReferences;
 
-        public void Initialize(IMatchSystem matchSystem, Mesh[] cardReferences)
+        public IEnumerator Initialize(IMatchSystem matchSystem, Mesh[] cardReferences)
         {
             _cardReferences = cardReferences;
             _matchSystem = matchSystem;
             OnUpdate += CheckGameEnd;
 
-            CreateCards();
-
             SetCameraAboveFieldCenter(Camera.main.transform);
-
-            //TODO: maybe it's unnecessary 
-            StartCoroutine(SetupCameraTransform(Camera.main));
+            yield return CreateCards();
         }
 
         public void DirectUpdate()
@@ -49,12 +45,13 @@ namespace PlayField
             OnUpdate();
         }
 
-        public void Reset()
+        public IEnumerator Reset()
         {
             cards.Clear();
             cardObjects.ForEach(Destroy);
 
-            CreateCards();
+            yield return CreateCards();
+
             OnUpdate += CheckGameEnd;
         }
 
@@ -69,20 +66,23 @@ namespace PlayField
             OnUpdate -= CheckGameEnd;
         }
 
-        private void CreateCards()
+        private IEnumerator CreateCards()
         {
+            var initializeCoroutines = new List<IEnumerator>();
             var cardTypesList = GetCardTypes();
 
             for (var columnIndex = 0; columnIndex < columnCount; columnIndex++)
             {
                 for (var rowIndex = 0; rowIndex < rowCount; rowIndex++)
                 {
-                    SetupCard(rowIndex, columnIndex, cardTypesList);
+                    initializeCoroutines.Add(SetupCard(rowIndex, columnIndex, cardTypesList));
                 }
             }
+
+            yield return this.WaitAllCoroutines(initializeCoroutines.ToArray());
         }
 
-        private void SetupCard(int rowIndex, int columnIndex, Queue<uint> cardTypesList)
+        private IEnumerator SetupCard(int rowIndex, int columnIndex, Queue<uint> cardTypesList)
         {
             var cardObject = CreateCardObject(rowIndex, columnIndex);
             var card = cardObject.GetComponent<ICard>();
@@ -90,12 +90,13 @@ namespace PlayField
             var cardType = cardTypesList.Dequeue();
             cardObject.GetComponentInChildren<MeshFilter>().mesh = _cardReferences[cardType];
 
-            card.Initialize(cardType, _cardReferences[cardType]);
             card.OnOpeningEnd += () => { _matchSystem.TryToAddCard(card); };
             card.OnDestroy += () => { cards.Remove(card); };
 
             cards.Add(card);
             cardObjects.Add(cardObject);
+
+            return card.Initialize(cardType, _cardReferences[cardType]);
         }
 
         private GameObject CreateCardObject(int rowIndex, int columnIndex)

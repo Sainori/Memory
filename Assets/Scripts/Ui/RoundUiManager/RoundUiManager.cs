@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using GameSceneManager;
 using RoundSystems.Interfaces;
 using Ui.EndGameWindow;
@@ -18,7 +19,7 @@ namespace Ui.RoundUiManager
         private IEndGameWindow _endGameWindow;
         private IGameSceneManager _gameSceneManager;
 
-        public void Initialize(IScoreSystem scoreSystem, ILivesSystem livesSystem, IGameSceneManager gameSceneManager, Action onRestart)
+        public void Initialize(IScoreSystem scoreSystem, ILivesSystem livesSystem, IGameSceneManager gameSceneManager, Func<IEnumerator> onRestart)
         {
             _gameSceneManager = gameSceneManager;
 
@@ -30,7 +31,7 @@ namespace Ui.RoundUiManager
             _endGameWindow = endGameObject.GetComponent<IEndGameWindow>();
             _endGameWindow.Initialize();
 
-            _endGameWindow.OnRestartButton += onRestart;
+            _endGameWindow.OnRestartButton += () => StartCoroutine(onRestart.Invoke());
             _endGameWindow.OnBackButton += OnBackButton;
         }
 

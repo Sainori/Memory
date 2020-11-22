@@ -1,3 +1,4 @@
+using System.Collections;
 using Card;
 using Ui.RoundUiManager;
 using UnityEngine;
@@ -37,15 +38,21 @@ namespace RoundManager
             _roundUiManager = GetComponent<IRoundUiManager>();
             _gameSceneManager = GetComponent<IGameSceneManager>();
 
-            _cardMeshes = GetComponent<CardReferences>().GetCardObjects();
+            StartCoroutine(InitializeRound());
+        }
 
-            _playField.Initialize(_matchSystem, _cardMeshes);
+        private IEnumerator InitializeRound()
+        {
+            isGameEnded = true;
+
+            _cardMeshes = GetComponent<CardReferences>().GetCardObjects();
             _roundUiManager.Initialize(_scoreSystem, _livesSystem, _gameSceneManager, Restart);
             _saveManager.LoadSavedInfo();
 
             _livesSystem.OnDeath += () => OnGameEnd(false);
             _playField.OnGameEnd += () => OnGameEnd(true);
 
+            yield return _playField.Initialize(_matchSystem, _cardMeshes);
             isGameEnded = false;
         }
 
@@ -72,14 +79,14 @@ namespace RoundManager
             _playField.DirectUpdate();
         }
 
-        private void Restart()
+        private IEnumerator Restart()
         {
             _livesSystem.Reset();
             _scoreSystem.Reset();
             _matchSystem.Reset();
-
-            _playField.Reset();
             _roundUiManager.Reset();
+
+            yield return _playField.Reset();
 
             isGameEnded = false;
         }

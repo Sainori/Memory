@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Card
@@ -10,7 +11,7 @@ namespace Card
 
         int CardType { get; }
 
-        void Initialize(uint cardType, Mesh cardReference);
+        IEnumerator Initialize(uint cardType, Mesh cardReference);
         void SelectCard();
         void UnselectCard();
         void Destroy();

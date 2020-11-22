@@ -30,13 +30,13 @@ namespace Card
             _animator = cardModel.GetComponent<Animator>();
         }
 
-        public void Initialize(uint cardType, Mesh cardReference)
+        public IEnumerator Initialize(uint cardType, Mesh cardReference)
         {
             _cardType = cardType;
             cardState = CardState.Closed;
 
             SetView(cardReference);
-            StartCoroutine(ShowCardFirstTime(delayBeforeStart, firstShowDuration));
+            yield return ShowCardFirstTime(delayBeforeStart, firstShowDuration);
         }
 
         private void SetView(Mesh cardReference)
