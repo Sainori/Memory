@@ -6,8 +6,8 @@ namespace Card
 {
     public class Card : MonoBehaviour, ICard
     {
-        public event Action OnOpeningEnd = () => { };
-        public event Action OnDestroy = () => { };
+        public event Action<ICard> OnOpeningEnd = delegate { };
+        public event Action<ICard> OnDestroy = delegate { };
 
         public int CardType => (int) _cardType;
 
@@ -72,7 +72,7 @@ namespace Card
 
         public void Destroy()
         {
-            OnDestroy();
+            OnDestroy(this);
 
             OnOpeningEnd = null;
             OnDestroy = null;
@@ -102,7 +102,7 @@ namespace Card
                 yield break;
             }
 
-            OnOpeningEnd();
+            OnOpeningEnd(this);
         }
 
         private IEnumerator CloseCard()

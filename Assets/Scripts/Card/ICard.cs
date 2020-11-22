@@ -6,8 +6,8 @@ namespace Card
 {
     public interface ICard
     {
-        event Action OnOpeningEnd;
-        event Action OnDestroy;
+        event Action<ICard> OnOpeningEnd;
+        event Action<ICard> OnDestroy;
 
         int CardType { get; }
 

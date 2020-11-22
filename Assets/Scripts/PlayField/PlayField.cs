@@ -91,13 +91,26 @@ namespace PlayField
             var cardType = cardTypesList.Dequeue();
             cardObject.GetComponentInChildren<MeshFilter>().mesh = _cardReferences[cardType];
 
-            card.OnOpeningEnd += () => { _matchSystem.TryToAddCard(card); };
-            card.OnDestroy += () => { cards.Remove(card); };
+            card.OnOpeningEnd += OnOpeningCardEnd;
+            card.OnDestroy += OnCardDestroy;
 
             cards.Add(card);
             cardObjects.Add(cardObject);
 
             return card.Initialize(cardType, _cardReferences[cardType]);
+        }
+
+        private void OnOpeningCardEnd(ICard card)
+        {
+            _matchSystem.TryToAddCard(card);
+        }
+
+        private void OnCardDestroy(ICard card)
+        { 
+            cards.Remove(card);
+
+            card.OnDestroy -= OnCardDestroy;
+            card.OnOpeningEnd -= OnOpeningCardEnd;
         }
 
         private GameObject CreateCardObject(int rowIndex, int columnIndex)

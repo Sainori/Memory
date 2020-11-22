@@ -32,6 +32,7 @@ namespace Ui.MainUiManager
 
         private void OnPlay()
         {
+            _mainUi.OnPlayButtonClick -= OnPlay;
             StartCoroutine(_gameSceneManager.ChangeSceneOn((int) GameScenes.RoundScene));
         }
     }
