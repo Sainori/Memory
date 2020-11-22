@@ -14,6 +14,7 @@ namespace Ui.EndGameWindow
 
         [SerializeField] private string winMsg = "ВЫ ПОБЕДИЛИ!";
         [SerializeField] private string loseMsg = "ВЫ ПРОИГРАЛИ!";
+        [SerializeField] private string newMaxScoreMsg = "НОВЫЙ РЕКОРД!";
 
         [SerializeField] private GameObject container;
 
@@ -21,13 +22,15 @@ namespace Ui.EndGameWindow
         [SerializeField] private Text scorePoints;
         [SerializeField] private Text resultLabel;
 
-        [SerializeField] private GameObject newRecord;
+        [SerializeField] private Text newRecord;
 
         [SerializeField] private Button backButton;
         [SerializeField] private Button restartButton;
 
         public void Initialize()
         {
+            container.SetActive(false);
+
             backButton.onClick.AddListener( () => OnBackButton());
             restartButton.onClick.AddListener( () => OnRestartButton());
         }
@@ -40,7 +43,7 @@ namespace Ui.EndGameWindow
             maxScoreText.text = string.Format(maxScoreMsg, maxScore);
 
             resultLabel.text = isWin ? winMsg : loseMsg;
-            newRecord.SetActive(isNewMax);
+            newRecord.text = isNewMax ? newMaxScoreMsg : string.Empty;
         }
 
         public void Close()

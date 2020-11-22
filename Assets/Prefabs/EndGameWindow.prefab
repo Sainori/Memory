@@ -495,7 +495,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Record!
+  m_Text: "\u041D\u041E\u0412\u042B\u0419 \u0420\u0415\u041A\u041E\u0420\u0414!"
 --- !u!1 &7460805821918502529
 GameObject:
   m_ObjectHideFlags: 0
@@ -748,11 +748,12 @@ MonoBehaviour:
     {0}"
   winMsg: "\u0412\u042B \u041F\u041E\u0411\u0415\u0414\u0418\u041B\u0418!"
   loseMsg: "\u0412\u042B \u041F\u0420\u041E\u0418\u0413\u0420\u0410\u041B\u0418!"
+  newMaxScoreMsg: "\u041D\u041E\u0412\u042B\u0419 \u0420\u0415\u041A\u041E\u0420\u0414!"
   container: {fileID: 1432615906407967165}
   maxScoreText: {fileID: 5708803252407252884}
   scorePoints: {fileID: 5343228305605733970}
   resultLabel: {fileID: 4515862246274987642}
-  newRecord: {fileID: 6423350434642232423}
+  newRecord: {fileID: 1370532922999250030}
   backButton: {fileID: 4662473774673659288}
   restartButton: {fileID: 212050718540579923}
 --- !u!1 &7826891673529527536
