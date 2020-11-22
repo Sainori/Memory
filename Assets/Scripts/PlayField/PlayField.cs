@@ -52,6 +52,7 @@ namespace PlayField
 
             yield return CreateCards();
 
+            OnUpdate = () => { };
             OnUpdate += CheckGameEnd;
         }
 
