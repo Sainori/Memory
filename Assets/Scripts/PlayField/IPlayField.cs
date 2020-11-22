@@ -8,7 +8,7 @@ namespace PlayField
     {
         event Action OnGameEnd;
 
-        void Initialize(IMatchSystem matchSystem, GameObject[] cardReferences);
+        void Initialize(IMatchSystem matchSystem, Mesh[] cardReferences);
         void DirectUpdate();
         void Reset();
     }

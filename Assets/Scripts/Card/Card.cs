@@ -30,19 +30,24 @@ namespace Card
             _animator = cardModel.GetComponent<Animator>();
         }
 
-        public void Initialize(uint cardType)
+        public void Initialize(uint cardType, Mesh cardReference)
         {
             _cardType = cardType;
             cardState = CardState.Closed;
 
-            // SetView(cardType);
+            SetView(cardReference);
             StartCoroutine(ShowCardFirstTime(delayBeforeStart, firstShowDuration));
         }
 
-        //TODO: set actual view
-        private void SetView(uint cardType)
+        private void SetView(Mesh cardReference)
         {
-            cardModel.transform.GetComponent<MeshRenderer>().material.color = new Color(1 - (float) cardType / 4, 0, (float) cardType / 4);
+            var meshFilter = cardModel.GetComponent<MeshFilter>();
+            if (meshFilter == null)
+            {
+                return;
+            }
+
+            meshFilter.mesh = cardReference;
         }
 
         public void SelectCard()

@@ -592,7 +592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 347414720c83420485da44bccccc5c2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardMeshes:
+  cardObjects:
   - {fileID: 919132149155446097, guid: 2cec20106a6b0418499d418f5f4662ac, type: 3}
   - {fileID: 919132149155446097, guid: 257b5dbdbdef44a4da38296c30c1eb98, type: 3}
   - {fileID: 919132149155446097, guid: 2b0d8dacc4bb24d70bd145d46e22c8cd, type: 3}

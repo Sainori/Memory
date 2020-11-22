@@ -30,9 +30,9 @@ namespace PlayField
         private IMatchSystem _matchSystem;
         private Mesh[] _cardReferences;
 
-        public void Initialize(IMatchSystem matchSystem, GameObject[] cardReferences)
+        public void Initialize(IMatchSystem matchSystem, Mesh[] cardReferences)
         {
-            _cardReferences = cardReferences.ToList().Select(o => o.GetComponent<MeshFilter>().sharedMesh).ToArray();
+            _cardReferences = cardReferences;
             _matchSystem = matchSystem;
             OnUpdate += CheckGameEnd;
 
@@ -77,20 +77,25 @@ namespace PlayField
             {
                 for (var rowIndex = 0; rowIndex < rowCount; rowIndex++)
                 {
-                    var cardObject = CreateCardObject(rowIndex, columnIndex);
-                    var card = cardObject.GetComponent<ICard>();
-
-                    var cardType = cardTypesList.Dequeue();
-                    cardObject.GetComponentInChildren<MeshFilter>().mesh = _cardReferences[cardType];
-
-                    card.Initialize(cardType);
-                    card.OnOpeningEnd += () => { _matchSystem.TryToAddCard(card); };
-                    card.OnDestroy += () => { cards.Remove(card); };
-
-                    cards.Add(card);
-                    cardObjects.Add(cardObject);
+                    SetupCard(rowIndex, columnIndex, cardTypesList);
                 }
             }
+        }
+
+        private void SetupCard(int rowIndex, int columnIndex, Queue<uint> cardTypesList)
+        {
+            var cardObject = CreateCardObject(rowIndex, columnIndex);
+            var card = cardObject.GetComponent<ICard>();
+
+            var cardType = cardTypesList.Dequeue();
+            cardObject.GetComponentInChildren<MeshFilter>().mesh = _cardReferences[cardType];
+
+            card.Initialize(cardType, _cardReferences[cardType]);
+            card.OnOpeningEnd += () => { _matchSystem.TryToAddCard(card); };
+            card.OnDestroy += () => { cards.Remove(card); };
+
+            cards.Add(card);
+            cardObjects.Add(cardObject);
         }
 
         private GameObject CreateCardObject(int rowIndex, int columnIndex)

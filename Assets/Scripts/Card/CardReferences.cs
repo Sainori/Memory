@@ -1,14 +1,15 @@
+using System.Linq;
 using UnityEngine;
 
 namespace Card
 {
     public class CardReferences : MonoBehaviour
     {
-        [SerializeField] private GameObject[] cardMeshes;
+        [SerializeField] private GameObject[] cardObjects;
 
-        public GameObject[] GetCardObjects()
+        public Mesh[] GetCardObjects()
         {
-            return cardMeshes;
+            return cardObjects.Select(cardObject => cardObject.GetComponent<MeshFilter>()?.sharedMesh).ToArray();
         }
 
     }
